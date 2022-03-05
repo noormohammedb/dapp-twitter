@@ -1,9 +1,10 @@
 import "./App.css";
+import Landing from "./routes/Landing";
 
 function App() {
   return (
     <>
-      <div></div>
+      <Landing />
     </>
   );
 }
