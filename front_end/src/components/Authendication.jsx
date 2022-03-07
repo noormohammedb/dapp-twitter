@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ethers } from "ethers";
 import abi, { ContractAddress } from "../utils/getContract";
 
 import { useMyState, setMyState } from "../StatesContext";
 import SignupForm from "./SignupForm";
+import Profile from "./Profile";
 
 const Authendication = () => {
-  const { account, provider, myContract } = useMyState();
-  const { setMyContract } = setMyState();
-
-  const [user, setUser] = useState();
+  const { account, provider, myContract, userProfile } = useMyState();
+  const { setMyContract, setUserProfile } = setMyState();
 
   useEffect(async () => {
     console.log("abi: ", abi);
@@ -26,19 +25,15 @@ const Authendication = () => {
 
     // const myProfile = await contractObject.myProfile();
     const myProfile = await contractObject.users(account);
-    setUser(myProfile);
-    console.log("user: ", user);
+    setUserProfile(myProfile);
     console.log("myProfile: ", myProfile);
   }, []);
-
-  console.log("before return contract: ", myContract);
-  console.log("before return user: ", user);
 
   return (
     <>
       <div className="">Authendication</div>
       <span>contract address : {myContract?.address}</span>
-      {user?.isActive ? <></> : <SignupForm />}
+      {userProfile?.isActive ? <Profile /> : <SignupForm />}
     </>
   );
 };
