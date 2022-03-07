@@ -2,8 +2,8 @@ import React from "react";
 import { useMyState, setMyState } from "../StatesContext";
 
 const Dashboard = () => {
-  const [account] = useMyState();
-  const [setAccount] = setMyState();
+  const { account } = useMyState();
+  const { setAccount } = setMyState();
 
   const logoutAccount = () => {
     setAccount();
