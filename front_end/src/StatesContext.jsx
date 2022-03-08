@@ -21,15 +21,28 @@ export const setMyState = () => useContext(stateUpdateContext);
 export const StatesProvider = ({ children }) => {
   const [account, setAccount] = useState();
   const [provider, setProvider] = useState();
-  const [myContract, setMyContract] = useState();
+  const [myContractProvider, setMyContractProvider] = useState();
+  const [myContractSigner, setMyContractSigner] = useState();
   const [userProfile, setUserProfile] = useState();
 
   return (
     <stateContext.Provider
-      value={{ account, provider, myContract, userProfile }}
+      value={{
+        account,
+        provider,
+        myContractProvider,
+        userProfile,
+        myContractSigner,
+      }}
     >
       <stateUpdateContext.Provider
-        value={{ setAccount, setProvider, setMyContract, setUserProfile }}
+        value={{
+          setAccount,
+          setProvider,
+          setMyContractProvider,
+          setUserProfile,
+          setMyContractSigner,
+        }}
       >
         {children}
       </stateUpdateContext.Provider>

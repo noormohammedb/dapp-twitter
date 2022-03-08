@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 
 import { useMyState, setMyState } from "../StatesContext";
 import Authendication from "../components/Authendication";
+import { networkId } from "../utils/getContract";
 
 const Singup = () => {
   const { account, provider } = useMyState();
@@ -21,10 +22,11 @@ const Singup = () => {
   }, []);
 
   const authFunction = async () => {
+    // console.log("provider.network.chainId: ", provider.network.chainId);
     if (!provider) {
       alert("You should Install MetaMask to use this Application.");
       return;
-    } else if (provider.network.chainId != 3) {
+    } else if (provider.network.chainId != networkId) {
       console.log("You should connect to Ropsten Test Network.");
       alert("Change Network to Ropsten Test Network In MetaMask.");
       return;
