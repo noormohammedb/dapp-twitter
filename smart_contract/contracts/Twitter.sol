@@ -25,6 +25,14 @@ contract Twitter {
         string comment;
     }
 
+    event TweetCreated(
+        uint256 tweetId,
+        string content,
+        uint256 timestamp,
+        uint256 userId
+        // address userAddress
+    );
+
     mapping(address => uint256[]) public tweetIndex;
     mapping(address => User) public users;
     address[] public userAddressList;
@@ -53,7 +61,10 @@ contract Twitter {
         return users[msg.sender];
     }
 
-    function createTweet(string memory _tweetContent) external {
+    function createTweet(string memory _tweetContent)
+        external
+        returns (Tweet memory)
+    {
         require(users[msg.sender].isActive, "Please signup before tweet");
         require(
             bytes(_tweetContent).length > 0,
@@ -61,15 +72,22 @@ contract Twitter {
         );
         uint256 _userId = users[msg.sender].userId;
         tweetIndex[msg.sender].push(globalTweetId);
-        tweets.push(
-            Tweet({
-                tweetId: globalTweetId++,
-                content: _tweetContent,
-                timestamp: block.timestamp,
-                userId: _userId
-                // userAddress: msg.sender
-            })
+        Tweet memory newTweet = Tweet({
+            tweetId: globalTweetId++,
+            content: _tweetContent,
+            timestamp: block.timestamp,
+            userId: _userId
+            // userAddress: msg.sender
+        });
+        tweets.push(newTweet);
+        emit TweetCreated(
+            newTweet.tweetId,
+            newTweet.content,
+            newTweet.timestamp,
+            _userId
+            // msg.sender
         );
+        return newTweet;
     }
 
     function listAllTweets() external view returns (Tweet[] memory) {
