@@ -24,6 +24,7 @@ export const StatesProvider = ({ children }) => {
   const [myContractProvider, setMyContractProvider] = useState();
   const [myContractSigner, setMyContractSigner] = useState();
   const [userProfile, setUserProfile] = useState();
+  const [globalTweets, setGlobalTweets] = useState([]);
 
   return (
     <stateContext.Provider
@@ -33,6 +34,7 @@ export const StatesProvider = ({ children }) => {
         myContractProvider,
         userProfile,
         myContractSigner,
+        globalTweets,
       }}
     >
       <stateUpdateContext.Provider
@@ -42,6 +44,7 @@ export const StatesProvider = ({ children }) => {
           setMyContractProvider,
           setUserProfile,
           setMyContractSigner,
+          setGlobalTweets,
         }}
       >
         {children}
