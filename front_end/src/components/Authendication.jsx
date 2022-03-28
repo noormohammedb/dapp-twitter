@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 
-import { useMyState, setMyState } from "../StatesContext";
+import { useMyState } from "../StatesContext";
 import SignupForm from "./SignupForm";
 import Profile from "./Profile";
 
 const Authendication = () => {
   const { myContractProvider, userProfile } = useMyState();
-  setMyState();
 
   useEffect(async () => {
     // console.log("abi: ", abi);

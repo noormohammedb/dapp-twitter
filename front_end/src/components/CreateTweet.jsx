@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useMyState, setMyState } from "../StatesContext";
 import formatTweet from "../utils/formateTweet";
+import { AnimationLoading } from "./utilComponents/AnimationLoading";
 
 const CreateTweet = () => {
   const [tweetContent, setTweetContend] = useState("");
   const [waiting, setWaiting] = useState(false);
-  const { account, myContractSigner } = useMyState();
-  const { setAccount, setGlobalTweets } = setMyState();
+  const { myContractSigner } = useMyState();
+  const { setGlobalTweets } = setMyState();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -16,18 +17,15 @@ const CreateTweet = () => {
 
     setWaiting(true);
     const newTweetTx = await myContractSigner.createTweet(tweetContent);
-    console.log("newTweetTx: ", newTweetTx);
+    // console.log("newTweetTx: ", newTweetTx);
     const txComp = await newTweetTx.wait();
-    console.log("txComp: ", txComp);
+    // console.log("txComp: ", txComp);
     const newTweetInBlockchain = txComp.events[0].args;
-    console.log("newTweetInBlockchain: ", newTweetInBlockchain);
+    // console.log("newTweetInBlockchain: ", newTweetInBlockchain);
     console.log("New Tweet Sucess");
-    setTweetContend("");
     setGlobalTweets((old) => [formatTweet(newTweetInBlockchain), ...old]);
+    setTweetContend("");
     setWaiting(false);
-
-    // setAccount("");
-    // setAccount(account);
   };
 
   return (
@@ -41,6 +39,7 @@ const CreateTweet = () => {
           onChange={(e) => setTweetContend(e.target.value)}
         />
         <button onClick={handleClick}>Tweet</button>
+        {waiting ? <AnimationLoading /> : ""}
       </form>
     </>
   );

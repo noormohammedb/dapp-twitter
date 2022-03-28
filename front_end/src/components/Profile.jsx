@@ -14,7 +14,6 @@ const Profile = () => {
     <>
       <div>
         <div>Profile</div>
-        {console.log("Profile component userProfile: ", userProfile)}
         <img src={userProfile[2]} alt="profile picture" />
         <p>name: {userProfile[1]} </p>
       </div>

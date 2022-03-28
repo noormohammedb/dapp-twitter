@@ -16,12 +16,12 @@ const GlobalTweets = () => {
 
     setGlobalTweets(myTweets.map(formatTweet).reverse());
   }, []);
+
+  console.log("global tweets render");
   return (
     <>
       <div className="acc">address : {account}</div>
       <div className="contract">contract : {myContractProvider?.address}</div>
-
-      {console.log("global tweets render")}
 
       {globalTweets.map((tweet, index) => (
         <p key={index}> {JSON.stringify(tweet)} </p>

@@ -8,37 +8,13 @@ import Authendication from "../components/Authendication";
 import { networkId } from "../utils/getContract";
 
 const Singup = () => {
-  const {} = setMyState();
-
   const { account, provider, myContractProvider } = useMyState();
-  const {
-    setAccount,
-    setProvider,
-    setMyContractProvider,
-    setMyContractSigner,
-    setUserProfile,
-  } = setMyState();
+  const { setAccount, setMyContractSigner, setUserProfile } = setMyState();
 
   useEffect(async () => {
     console.log("signup use effect");
-    if (window.ethereum) {
-      const myProvider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(myProvider);
-      console.log("account: ", account);
-      console.log("provider: ", provider);
-
-      const contractObjectProvider = await new ethers.Contract(
-        ContractAddress,
-        abi,
-        myProvider
-      );
-      setMyContractProvider(contractObjectProvider);
-      console.log("contractObjectProvider: ", contractObjectProvider);
-      console.log("contract: ", myContractProvider);
-      // console.log("account: ", account);
-    } else {
-      console.log("Non Ethereum browser detected.");
-    }
+    console.log("account: ", account);
+    console.log("provider: ", provider);
   }, []);
 
   const authFunction = async () => {
@@ -51,30 +27,38 @@ const Singup = () => {
       alert("Change Network to Ropsten Test Network In MetaMask.");
       return;
     }
-    console.log("provider: ", provider);
-    const myAccount = await provider.send("eth_requestAccounts", []);
-    setAccount(myAccount[0]);
+    let myAccount;
+    try {
+      myAccount = await provider.send("eth_requestAccounts", []);
+      await window.localStorage.setItem("address", myAccount[0]);
+    } catch (metaMaskError) {
+      console.log("cancelled metamask connect");
+      console.log("metaMaskError: ", metaMaskError);
+    }
     console.log("myAccount", myAccount);
 
-    console.log("abi: ", abi);
     const contractObjectSigner = await new ethers.Contract(
       ContractAddress,
       abi,
       provider.getSigner()
     );
     // console.log("contractObjectSigner: ", contractObjectSigner);
-    setMyContractSigner(contractObjectSigner);
 
     // console.log("myContractProvider: ", myContractProvider);
     // const myProfile = await myContractProvider.myProfile();
     const myProfile = await myContractProvider.users(myAccount[0]);
     console.log("myProfile: ", myProfile);
+
+    setAccount(myAccount[0]);
+    setMyContractSigner(contractObjectSigner);
     setUserProfile(myProfile);
   };
 
   const logoutAccount = () => {
     setAccount();
   };
+
+  console.log("Signup Render");
 
   return (
     <>
