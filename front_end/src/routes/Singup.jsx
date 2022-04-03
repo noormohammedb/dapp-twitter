@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ethers } from "ethers";
 import abi, { ContractAddress } from "../utils/getContract";
 
@@ -61,19 +61,35 @@ const Singup = () => {
   console.log("Signup Render");
 
   return (
-    <>
-      <div className="">Signup Form</div>
+    <div className="flex min-h-screen justify-around items-center flex-col">
       {account?.length > 0 ? (
         <>
-          <p>{account}</p>
+          <Navigate to="/dashboard" />
+          {/* <p>{account}</p>
           <Authendication />
-          <button onClick={logoutAccount}>Logout</button>
+          <button onClick={logoutAccount}>Logout</button> */}
         </>
       ) : (
-        <button onClick={authFunction}>Connect Wallet</button>
+        <button
+          onClick={authFunction}
+          type="button"
+          className="border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 text-sm text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-xl"
+        >
+          <img
+            className="w-10 h-14 mr-5"
+            src="https://ipfs.fleek.co/ipfs/bafybeidrv26xx2hu6gpfqyfhclvljks5b355cruw74qj5ezbdzh4w7t5l4"
+            alt="metamask icon"
+          />
+          Connect with MetaMask
+        </button>
       )}
-      <Link to="/dashboard">dashboard</Link>
-    </>
+      <Link
+        to="/dashboard"
+        className="underline text-indigo-600 hover:text-indigo-900"
+      >
+        dashboard
+      </Link>
+    </div>
   );
 };
 
