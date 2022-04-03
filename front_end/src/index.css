@@ -1,8 +1,3 @@
-body {
-  background: #000000c9;
-  color: #ffffff;
-}
-
-a {
-  color: #0c67c2;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
