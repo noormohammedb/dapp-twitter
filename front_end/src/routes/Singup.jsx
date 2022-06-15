@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import abi, { ContractAddress } from "../utils/getContract";
+import metamaskSVG from "../assets/metamask.svg";
 
 import { useMyState, setMyState } from "../StatesContext";
 import Authendication from "../components/Authendication";
@@ -10,6 +11,7 @@ import { networkId } from "../utils/getContract";
 const Singup = () => {
   const { account, provider, myContractProvider } = useMyState();
   const { setAccount, setMyContractSigner, setUserProfile } = setMyState();
+  const navigateToDashboard = useNavigate();
 
   useEffect(async () => {
     console.log("signup use effect");
@@ -52,6 +54,10 @@ const Singup = () => {
     setAccount(myAccount[0]);
     setMyContractSigner(contractObjectSigner);
     setUserProfile(myProfile);
+
+    if (myProfile.isActive) {
+      navigateToDashboard("/dashboard", { replace: true });
+    }
   };
 
   const logoutAccount = () => {
@@ -64,10 +70,7 @@ const Singup = () => {
     <div className="flex min-h-screen justify-around items-center flex-col">
       {account?.length > 0 ? (
         <>
-          <Navigate to="/dashboard" />
-          {/* <p>{account}</p>
           <Authendication />
-          <button onClick={logoutAccount}>Logout</button> */}
         </>
       ) : (
         <button
@@ -77,7 +80,7 @@ const Singup = () => {
         >
           <img
             className="w-10 h-14 mr-5"
-            src="https://ipfs.fleek.co/ipfs/bafybeidrv26xx2hu6gpfqyfhclvljks5b355cruw74qj5ezbdzh4w7t5l4"
+            src={metamaskSVG}
             alt="metamask icon"
           />
           Connect with MetaMask

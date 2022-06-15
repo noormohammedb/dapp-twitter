@@ -7,7 +7,7 @@ const Landing = () => {
         <div className="">
           <img
             className="w-40 "
-            src="https://abs.twimg.com/responsive-web/client-web-legacy/icon-ios.b1fc7275.png"
+            src="https://res.cloudinary.com/gameovermarinehubby/image/upload/v1655302968/icon-ios.b1fc7275_vuf5dz.png"
             alt="Decentalised twitter"
           />
         </div>
