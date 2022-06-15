@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyState } from "../StatesContext";
+import { AnimationLoading } from "./utilComponents/AnimationLoading";
 
 const SignupForm = () => {
   const [userName, setUserName] = useState("");
+  const [waiting, setWaiting] = useState(false);
   const [imageLink, setImageLink] = useState("https://loremflickr.com/320/240");
   const { myContractSigner } = useMyState();
   const navigate = useNavigate();
@@ -17,13 +19,13 @@ const SignupForm = () => {
       userName,
       imageLink
     );
+    setWaiting(true);
     console.log("signupTransaction: ", signupTransaction);
     await signupTransaction.wait();
     console.log("signup success");
+    setWaiting(false);
     navigate("/dashboard");
   };
-
-  console.log("userName: ", userName);
 
   return (
     <>
@@ -44,6 +46,7 @@ const SignupForm = () => {
         >
           submit
         </button>
+        {waiting ? <AnimationLoading /> : ""}
       </form>
     </>
   );
