@@ -15,7 +15,7 @@ const Landing = () => {
         <div className="second">
           <Link
             to="/signup"
-            className="underline text-indigo-600 hover:text-indigo-900"
+            className="underline text-indigo-900 hover:text-violet-800"
           >
             &nbsp; singup/login
           </Link>

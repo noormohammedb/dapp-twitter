@@ -14,15 +14,17 @@ const GlobalTweets = () => {
   useEffect(() => {
     isMounted.current = true;
     myContractProvider && loadTweets();
+    // console.log("globalTweets: ", globalTweets);
     return () => (isMounted.current = false);
   }, [myContractProvider]);
 
   const loadTweets = async () => {
     const myTweets = await myContractProvider.listAllTweets();
+    const formattedTweet = myTweets.map(formatTweet);
     console.log("myContractProvider: in GlobalTweets ", myContractProvider);
     console.log("myTweets: ", myTweets);
     if (isMounted.current) {
-      setGlobalTweets(myTweets.map(formatTweet));
+      setGlobalTweets(formattedTweet);
     }
   };
 
@@ -37,7 +39,7 @@ const GlobalTweets = () => {
 
         {globalTweets.map((tweet, index) => (
           <div
-            className="flex space-x-3 py-8 pt-2 p-2 my-1 border-t-1 border-b-2 border-slate-300 max-w-3xl w-full hover:bg-gray-50 hover:shadow-sm"
+            className="flex transition space-x-3 py-8 pt-4 p-2 my-2 border-t-1 border-b-2 border-l-2 border-stone-400 max-w-3xl w-full rounded-xl hover:bg-indigo-800 hover:shadow-sm"
             key={index}
           >
             <img
@@ -51,13 +53,13 @@ const GlobalTweets = () => {
                   <h3 className="text-sm font-bold">{tweet.userId}</h3>
                   <p className="text-gray-500 text-sm">{""}</p>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-800">
                   {tweet?.timestamp?.slice(5, 10) +
                     " " +
                     tweet?.timestamp?.slice(12, 16)}
                 </p>
               </div>
-              <p className="text-base text-gray-800 line-clamp-4 break-all">
+              <p className="text-base text-gray-900 line-clamp-4 break-all">
                 {tweet.content?.replace(/(<([^>]+)>)/gi, "")}
                 {/* {pubContent} */}
               </p>

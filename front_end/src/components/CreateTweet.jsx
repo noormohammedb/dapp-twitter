@@ -38,6 +38,7 @@ const CreateTweet = () => {
             disabled={waiting}
             value={tweetContent}
             onChange={(e) => setTweetContend(e.target.value)}
+            className="border-2 rounded-lg p-2 bg-slate-300 text-gray-900"
           />
           <button
             onClick={handleClick}

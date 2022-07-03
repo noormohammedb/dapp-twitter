@@ -88,7 +88,7 @@ const Singup = () => {
       )}
       <Link
         to="/dashboard"
-        className="underline text-indigo-600 hover:text-indigo-900"
+        className="underline text-blue-500 hover:text-violet-900"
       >
         dashboard
       </Link>
