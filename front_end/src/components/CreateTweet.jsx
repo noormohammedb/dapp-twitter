@@ -30,17 +30,25 @@ const CreateTweet = () => {
 
   return (
     <>
-      <form>
-        <input
-          type="text"
-          placeholder="Tweet Content"
-          disabled={waiting}
-          value={tweetContent}
-          onChange={(e) => setTweetContend(e.target.value)}
-        />
-        <button onClick={handleClick}>Tweet</button>
-        {waiting ? <AnimationLoading /> : ""}
-      </form>
+      <div className="p-2 border-2 rounded w-96">
+        <form className="flex justify-between">
+          <input
+            type="text"
+            placeholder="Tweet Content"
+            disabled={waiting}
+            value={tweetContent}
+            onChange={(e) => setTweetContend(e.target.value)}
+            className="border-2 rounded-lg p-2 bg-slate-300 text-gray-900"
+          />
+          <button
+            onClick={handleClick}
+            className="text-blue-700 border border-blue-500 hover:bg-blue-200 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 px-3 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+          >
+            Tweet
+          </button>
+          {waiting ? <AnimationLoading /> : ""}
+        </form>
+      </div>
     </>
   );
 };
